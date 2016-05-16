@@ -2,6 +2,7 @@
 
 在读操作的最底层函数disk0_read_blks_nolock（读取连续块）中增加print_stackframe，我们不难得到如下输出：
 
+```
 ebp:0xc03699f8 eip:0xc0100bd2 args:0xc0152fe0 0x00000100 0xc0369a38 0x00000000 
     kern/debug/kdebug.c:350: print_stackframe+21
 ebp:0xc0369a38 eip:0xc0110ccc args:0x0000005a 0x00000001 0x04000000 0xc0367008 
@@ -40,6 +41,7 @@ ebp:0xc0369fbc eip:0xc0102b16 args:0xc01183f0 0xc0369fdc 0xc01183f0 0x00000000
     kern/trap/trapentry.S:24: <unknown>+0
 ebp:0xc0369fec eip:0xc010dcb6 args:0x00000000 0x00000000 0x00000010 0xc0356458 
     kern/process/proc.c:992: user_main+70
+```
 
 可以看到如下流程：
 从系统调用开始 syscall -> sys_exec -> do_execve -> load_icode -> load_icode_read -> sysfile_read -> file_read -> sfs_read -> sfs_io -> sfs_io_nolock -> sfs_rbuf -> sfs_rwblock_nolock -> disk0_io -> disk0_read_blks_nolock
